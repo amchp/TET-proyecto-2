@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+service HeartbeatService {
+    rpc ping(Request) returns (HeartbeatResponse) {}
+}
+
+message Request {}
+
+message HeartbeatResponse {
+    float load = 1;
+}

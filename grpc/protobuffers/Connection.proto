@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+service ConnectionService {
+    rpc onConnect(onConnectRequest) returns (onConnectResponse) {}
+}
+
+message onConnectRequest {
+    string ip_address    = 1;
+    string instance_name = 2;
+}
+
+message onConnectResponse {
+    bool is_accepted = 1;
+}
