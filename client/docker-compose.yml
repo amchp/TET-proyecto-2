@@ -1,0 +1,13 @@
+services:
+  client:
+    build:
+      context: ./ABClient
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./models/persistence/files/
+        target: /usr/src/app/models/persistence/files/
+    ports:
+      - "80:80"
+      - "8080:8080"
+  # Apaache Service

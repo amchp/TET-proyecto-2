@@ -1,0 +1,11 @@
+services:
+  mom:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./models/persistence/files/
+        target: /usr/src/app/models/persistence/files/
+    ports:
+      - "8080:8080"
