@@ -1,0 +1,5 @@
+import os
+BASE_DIR=os.getcwd()
+SERVER_ADDRESS = "0.0.0.0"
+GRPC_SERVER_PORT = 8080
+GRPC_TIMEOUT = 5
