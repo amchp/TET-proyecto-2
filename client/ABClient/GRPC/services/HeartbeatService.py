@@ -9,4 +9,4 @@ class HearbeatService(Heartbeat_pb2_grpc.HeartbeatServiceServicer):
     def ping(self, request, context):
         print(f'GRPC-HEARTBEAT-SERVICE: Connection request received from')
         
-        return Heartbeat_pb2.HeartbeatResponse(load=0.5)
+        return Heartbeat_pb2.HeartbeatResponse(load=0.1)
