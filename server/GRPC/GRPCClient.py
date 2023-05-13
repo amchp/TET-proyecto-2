@@ -1,12 +1,11 @@
 import grpc
 from google.protobuf.json_format import MessageToDict
-from threading import Thread
+from multiprocessing.pool import ThreadPool
 from time import time
 from GRPC.generated.heartbeat import Heartbeat_pb2, Heartbeat_pb2_grpc
 from GRPC.services.ConnectionService import ConnectionService
 from config import GRPC_TIMEOUT, DESIRED, MAXIMUM
 
-meanLoad = 0
 startTime = time()
 
 def sendPingToAddress(address):
@@ -15,27 +14,27 @@ def sendPingToAddress(address):
         response = stub.ping(Heartbeat_pb2.Request(), timeout=GRPC_TIMEOUT)
         response_dict = MessageToDict(response, preserving_proto_field_name=True)
         load = response_dict['load']
+        ConnectionService.setLoad(address, load)
         print(f'GRPC-HEARTBEAT-SERVICE: load received {address} {load}', flush=True)
         return load
 
-def serverSwitch(i):
+def serverSwitch(address):
     # Create new AWS EC2
-    # ConnectionService.deleteAddresses(i)
-    print("Delete")
+    ConnectionService.deleteAddresses(address)
+    # print("Delete")
 
-def ping(i, address):
-    global meanLoad
+def ping(address):
     try:
-        meanLoad += sendPingToAddress(address)
+        return sendPingToAddress(address)
     except:
-        serverSwitch(i)
+        serverSwitch(address)
         
-def autoScaling():
-    global meanLoad, startTime
+def autoScaling(meanLoad):
+    global startTime
     if startTime is None:
         startTime = time()
     currentTime = time()
-    print(startTime, currentTime, flush=True)
+    # print(startTime, currentTime, flush=True)
     # Maybe it would be better 
     if currentTime < startTime + 300:
         return
@@ -50,19 +49,21 @@ def autoScaling():
         return
 
 def sendPingToAllAddress():
-    global meanLoad
     addresses = ConnectionService.addresses.copy()
-    threads = []
-    meanLoad = 0
-    for i in range(len(addresses)):
-        threads.append(Thread(target=ping, args=(i, addresses[i])))
-        threads[i].start()
-    for thread in threads:
-        thread.join()
+    with ThreadPool() as pool:
+        result = pool.map_async(ping, addresses.keys())
+        result.wait()
+        meanLoad = sum(result.get())
     meanLoad /= len(addresses) if len(addresses) else 1
     print(f'Mean load {meanLoad}', flush=True)
-    autoScaling()
+    autoScaling(meanLoad)
     
 def continuouslyPing():
+    prevTime = 0
+    curTime = 5
     while True:
+        while curTime - prevTime < 5:
+            curTime = time()
+        prevTime = time()
         sendPingToAllAddress()
+        curTime = time()

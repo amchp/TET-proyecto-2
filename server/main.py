@@ -1,6 +1,7 @@
 from GRPC.GRPCServer import serveGRPC
 from threading import Thread
 from GRPC.GRPCClient import continuouslyPing
+from GRPC.API.api import runAPI
 
 def startEC2():
     # Start desired EC2
@@ -14,7 +15,9 @@ def runContinuouslyPing():
 
 if __name__ == '__main__':
     # startEC2()
-    GRPCThread = Thread(target=runGRPCServer)
-    # constantPing = Thread(target=runContinuouslyPing)
-    GRPCThread.start()
-    # constantPing.start()
+    # APIThread = Thread(target=runAPI)
+    # GRPCThread = Thread(target=runGRPCServer)
+    constantPing = Thread(target=runContinuouslyPing)
+    # GRPCThread.start()
+    constantPing.start()
+    # APIThread.start()

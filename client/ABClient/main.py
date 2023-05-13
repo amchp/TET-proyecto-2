@@ -1,6 +1,7 @@
 from GRPC.GRPCServer import serveGRPC
 from GRPC.GRPCClient import connect
 from threading import Thread
+from API.api import runAPI
 
 
 def runConnection():
@@ -10,6 +11,9 @@ def runGRPCServer():
     serveGRPC()
 
 if __name__ == '__main__':
-    runConnection()
-    # GRPCThread = Thread(target=runGRPCServer)
-    # GRPCThread.start()
+    # runConnection()
+    APIThread = Thread(target=runAPI)
+    GRPCThread = Thread(target=runGRPCServer)
+    APIThread.start()
+    GRPCThread.start()
+    
