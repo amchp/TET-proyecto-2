@@ -1,15 +1,12 @@
 import boto3
 import botocore.exceptions
 from config import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCES_KEY, AWS_SESSION_TOKEN, REGION_NAME, LAUNCH_TEMPLATE_ID, AMI_ID
+resource_ec2 = boto3.resource("ec2", region_name=REGION_NAME, aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCES_KEY, aws_session_token=AWS_SESSION_TOKEN)
 
 class AWS_SERVICE:
 
-    resource_ec2 = None
-
-    def __init__(self):
-        self.resource_ec2 = boto3.resource("ec2", region_name=REGION_NAME, aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCES_KEY, aws_session_token=AWS_SESSION_TOKEN)
-
-    def create_ec2_instance(self, quantity:int=1):
+    @staticmethod
+    def create_ec2_instance(quantity:int=1):
         instance = None
         try:
             instance_params = {
@@ -18,7 +15,7 @@ class AWS_SERVICE:
                 },
                 "ImageId": AMI_ID
             }
-            instance = self.resource_ec2.create_instances(**instance_params, MinCount=quantity, MaxCount=quantity)[0]
+            instance = resource_ec2.create_instances(**instance_params, MinCount=quantity, MaxCount=quantity)[0]
             print("RUNNING INSTANCE(S)...")
             instance.wait_until_running
         except botocore.exceptions.ClientError as err:
@@ -27,9 +24,10 @@ class AWS_SERVICE:
         else:
             print("SUCCESS! Instance(s) running")
 
-    def list_all_instances(self):
+    @staticmethod
+    def list_all_instances():
         instances = []
-        for instance in self.resource_ec2.instances.all():
+        for instance in resource_ec2.instances.all():
             instance_name = None
             if instance.tags != None:
                 for tag in instance.tags:
@@ -47,10 +45,11 @@ class AWS_SERVICE:
             instances.append(instance_data)
         return instances
 
-    def stop_instance(self, instance_id:str):
+    @staticmethod
+    def stop_instance(instance_id:str):
         response = None
         try:
-            instance = self.resource_ec2.Instance(instance_id)
+            instance = resource_ec2.Instance(instance_id)
             response = instance.stop()
             print("STOPPING INSTANCE...")
             instance.wait_until_stopped()
@@ -60,10 +59,11 @@ class AWS_SERVICE:
         else:
             print(response)
 
-    def start_instance(self, instance_id:str):
+    @staticmethod
+    def start_instance(instance_id:str):
         response = None
         try:
-            instance = self.resource_ec2.Instance(instance_id)
+            instance = resource_ec2.Instance(instance_id)
             response = instance.start()
             print("STARTING INSTANCE...")
             instance.wait_until_running()
@@ -73,10 +73,11 @@ class AWS_SERVICE:
         else:
             print(response)
 
-    def terminate_instance(self, instance_id:str):
+    @staticmethod
+    def terminate_instance(instance_id:str):
         response = None
         try:
-            instance = self.resource_ec2.Instance(instance_id)
+            instance = resource_ec2.Instance(instance_id)
             response = instance.terminate()
             print("TERMINATING INSTANCE...")
             instance.wait_until_terminated()
