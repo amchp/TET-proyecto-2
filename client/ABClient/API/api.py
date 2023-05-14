@@ -8,8 +8,6 @@ CORS(app)
 
 @app.route("/load/", methods=["POST"])
 def setLoad():
-    print(request.json)
-    global load
     HearbeatService.setLoad(request.json['load'])
     return '', 200
 

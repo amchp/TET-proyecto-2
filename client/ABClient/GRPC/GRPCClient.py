@@ -1,17 +1,16 @@
 import grpc
 from google.protobuf.json_format import MessageToDict
 from GRPC.generated.connection import Connection_pb2, Connection_pb2_grpc
-from config import GRPC_TIMEOUT
+from config import TARGET_CONNECTION, GRPC_TIMEOUT, SERVER_ADDRESS
 
 
 def connect():
-    a = "0.0.0.0:8080"
 
-    with grpc.insecure_channel(a) as channel:
+    with grpc.insecure_channel(TARGET_CONNECTION) as channel:
         stub = Connection_pb2_grpc.ConnectionServiceStub(channel)
         response = stub.onConnect(
             Connection_pb2.onConnectRequest(
-                instance_name="MACHINE", ip_address="1.1.1.1"
+                instance_name="MACHINE", ip_address=SERVER_ADDRESS
             ),
             timeout=GRPC_TIMEOUT,
         )

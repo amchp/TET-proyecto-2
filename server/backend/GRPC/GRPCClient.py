@@ -1,10 +1,12 @@
 import grpc
 from google.protobuf.json_format import MessageToDict
 from multiprocessing.pool import ThreadPool
+from threading import Thread
 from time import time
 from GRPC.generated.heartbeat import Heartbeat_pb2, Heartbeat_pb2_grpc
 from GRPC.services.ConnectionService import ConnectionService
 from config import GRPC_TIMEOUT, DESIRED, MAXIMUM
+from server.AWS.AWS import AWS_SERVICE
 
 startTime = time()
 
@@ -18,9 +20,15 @@ def sendPingToAddress(address):
         print(f'GRPC-HEARTBEAT-SERVICE: load received {address} {load}', flush=True)
         return load
 
+def terminate_instance(address):
+    instance_id = AWS_SERVICE.get_instance_by_ip(address.partition(":"))
+    AWS_SERVICE.terminate_instance(instance_id)
+
 def serverSwitch(address):
     # Create new AWS EC2
+    Thread(target=terminate_instance, args=[address]).start()
     ConnectionService.deleteAddresses(address)
+    AWS_SERVICE.create_ec2_instance()
     # print("Delete")
 
 def ping(address):
@@ -28,6 +36,8 @@ def ping(address):
         return sendPingToAddress(address)
     except:
         serverSwitch(address)
+    
+
         
 def autoScaling(meanLoad):
     global startTime
@@ -40,12 +50,11 @@ def autoScaling(meanLoad):
         return
     startTime = time()
     if meanLoad >= 60 and len(ConnectionService.addresses) < MAXIMUM:
-        # New machine
-        pass
+        Thread(target=AWS_SERVICE.create_ec2_instance).start()
         return
     if meanLoad < 60 and len(ConnectionService.addresses) > DESIRED:
-        # Terminate machine
-        pass
+        address = ConnectionService.addresses[-1]
+        Thread(target=terminate_instance, args=[address]).start()
         return
 
 def sendPingToAllAddress():
