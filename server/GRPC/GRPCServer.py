@@ -2,6 +2,7 @@ from concurrent import futures
 import grpc
 from .services.ConnectionService import ConnectionService
 from GRPC.generated.connection import Connection_pb2_grpc
+from AWS.AWS import AWS_SERVICE
 from config import GRPC_SERVER_PORT, SERVER_ADDRESS
 
 
