@@ -1,8 +1,10 @@
 from flask import Flask, request
+from flask_cors import CORS
 from config import SERVER_ADDRESS, API_PORT
 from GRPC.services.HeartbeatService import HearbeatService
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/load/", methods=["POST"])
 def setLoad():
