@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+const SERVER_URL = process.env.PUBLIC_IP;
 
 export async function setLoadToClient(load: number): Promise<void> {
     try {
