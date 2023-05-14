@@ -44,6 +44,12 @@ class AWS_SERVICE:
             }
             instances.append(instance_data)
         return instances
+    
+    @staticmethod
+    def get_instance_by_ip(ip_addr:str):
+        for instance in resource_ec2.instances.all():
+            if instance.public_ip_address == ip_addr:
+                return instance.id
 
     @staticmethod
     def stop_instance(instance_id:str):
