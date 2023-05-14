@@ -6,7 +6,6 @@ app = Flask(__name__)
 
 @app.route("/load/", methods=["POST"])
 def setLoad():
-    global load
     HearbeatService.setLoad(request.json['load'])
     return '', 200
 
