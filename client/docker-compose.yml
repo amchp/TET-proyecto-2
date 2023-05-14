@@ -3,11 +3,17 @@ services:
     build:
       context: ./ABClient
       dockerfile: Dockerfile
-    volumes:
-      - type: bind
-        source: ./models/persistence/files/
-        target: /usr/src/app/models/persistence/files/
     ports:
-      - "80:80"
+      - "8000:8000"
       - "8080:8080"
-  # Apaache Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+    ports:
+      - '80:3000'
+
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
