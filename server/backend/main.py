@@ -24,4 +24,3 @@ if __name__ == '__main__':
     startEC2()
     GRPCThread.start()
     constantPing.start()
-    

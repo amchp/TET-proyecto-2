@@ -1,4 +1,5 @@
 import { Client } from "../models/Client";
+import { deleteClient } from "../services/ClientService";
 
 interface ModalClientProps {
     client: Client;
@@ -9,7 +10,7 @@ function ModalClient({ client, closeModal }: ModalClientProps) {
     const loadColor = client.getLoad() < 0.4 ? "text-green-500" : client.getLoad() < 0.7 ? "text-yellow-500" : "text-red-500";
 
     const handleDelete = () => {
-        closeModal();
+        deleteClient(client).then(() => {closeModal();}).catch(() => {});
     };
 
     return (

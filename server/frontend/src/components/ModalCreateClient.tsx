@@ -1,10 +1,12 @@
+import { createClient } from "../services/ClientService";
+
 interface ModalCreateClientProps {
     closeModal: () => void;
 }
 
 function ModalCreateClient({ closeModal }: ModalCreateClientProps) {
     const handleCreate = () => {
-        closeModal();
+        createClient().then(() => {closeModal();}).catch(() => {});
     };
 
     return (
