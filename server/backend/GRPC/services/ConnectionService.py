@@ -1,5 +1,6 @@
 from GRPC.generated.connection import Connection_pb2, Connection_pb2_grpc
-from threading import Lock
+from threading import Lock, Thread
+from config import MAXIMUM
 
 
 class ConnectionService(Connection_pb2_grpc.ConnectionServiceServicer):
