@@ -49,7 +49,9 @@ def autoScaling(meanLoad):
     # Maybe it would be better 
     if currentTime < startTime + 300:
         return
+    print("AutoScaling", flush=True)
     startTime = time()
+
     if meanLoad >= 60 and len(ConnectionService.addresses) < MAXIMUM:
         Thread(target=AWS_SERVICE.create_ec2_instance).start()
         return

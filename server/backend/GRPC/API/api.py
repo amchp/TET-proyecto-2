@@ -20,7 +20,9 @@ def servers():
 @app.route("/servers/<address>/", methods=["DELETE"])
 def deleteServer(address):
     try:
+        instance_id = ConnectionService.addresses[address]['instance_id']
         ConnectionService.deleteAddresses(address)
+        AWS_SERVICE.terminate_instance(instance_id)
         return '', 204
     except:
         abort(404)
