@@ -10,3 +10,18 @@ services:
       - PUBLIC_IP=${PUBLIC_IP}
       - PRIVATE_IP=${PRIVATE_IP}
       - INSTANCE_ID=${INSTANCE_ID}
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+    ports:
+      - '80:3000'
+
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
+    environment:
+      - PUBLIC_IP=${PUBLIC_IP}

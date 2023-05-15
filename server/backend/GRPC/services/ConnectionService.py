@@ -1,6 +1,6 @@
 from GRPC.generated.connection import Connection_pb2, Connection_pb2_grpc
 from threading import Lock, Thread
-from config import MAXIMUM
+from config import GRPC_SERVER_PORT
 
 
 class ConnectionService(Connection_pb2_grpc.ConnectionServiceServicer):
@@ -34,6 +34,6 @@ class ConnectionService(Connection_pb2_grpc.ConnectionServiceServicer):
         print(f'GRPC-CONNECTION-SERVICE: Connection request received from')
         print(f'GRPC-CONNECTION-SERVICE: Instance name: {request.instance_name}')
         print(f'GRPC-CONNECTION-SERVICE: IP address: {request.ip_address}')
-        ConnectionService.addAddresses(request.ip_address, request.instance_name)
+        ConnectionService.addAddresses(f'{request.ip_address}:{GRPC_SERVER_PORT}', request.instance_name)
         print(ConnectionService.addresses, flush=True)
         return Connection_pb2.onConnectResponse(is_accepted=True)
