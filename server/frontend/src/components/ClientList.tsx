@@ -18,9 +18,12 @@ function ClientList() {
         setModalIsOpen(false);
     }
 
-    useEffect(() => {
-        getClients().then((clients) => setClients(clients));
-    }, []);
+    useEffect(() => { 
+        const interval = setInterval(() => {
+            getClients().then((clients) => setClients(clients));
+        }, 1000);
+        return () => clearInterval(interval);
+    });
 
     return (
         <div className='py-8  mx-auto w-full'>
@@ -34,7 +37,7 @@ function ClientList() {
                             Crear cliente
                         </span>
                     </button>
-                    
+
                 </div>
 
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />

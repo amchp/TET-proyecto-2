@@ -12,6 +12,8 @@ def servers():
 
 @app.route("/servers/<address>/", methods=["DELETE"])
 def deleteServer(address):
+    print(f'API: Delete request received from {address}')
+    return "", 204
     try:
         ConnectionService.deleteAddresses(address)
         return '', 204
