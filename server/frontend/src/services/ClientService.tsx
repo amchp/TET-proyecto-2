@@ -20,9 +20,6 @@ export async function getClients(): Promise<(Client)[]> {
     }
 }
 
-export async function createClient(): Promise<void> {
-
-}
 
 export async function deleteClient(client: Client): Promise<void> {
     try {
@@ -31,3 +28,13 @@ export async function deleteClient(client: Client): Promise<void> {
         throw error.response.data;
     }
 }
+
+
+export async function createClient(): Promise<void> {
+    try {
+        await axios.post(SERVER_URL + '/servers/create/');
+    } catch (error: any) {
+        throw error.response.data;
+    }
+}
+
