@@ -6,7 +6,7 @@ from time import time
 from GRPC.generated.heartbeat import Heartbeat_pb2, Heartbeat_pb2_grpc
 from GRPC.services.ConnectionService import ConnectionService
 from config import GRPC_TIMEOUT, DESIRED, MAXIMUM
-from server.AWS.AWS import AWS_SERVICE
+from AWS.AWS import AWS_SERVICE
 
 startTime = time()
 

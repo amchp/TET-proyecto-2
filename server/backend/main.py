@@ -15,9 +15,9 @@ def runContinuouslyPing():
 
 if __name__ == '__main__':
     # startEC2()
-    # APIThread = Thread(target=runAPI)
+    APIThread = Thread(target=runAPI)
     # GRPCThread = Thread(target=runGRPCServer)
     constantPing = Thread(target=runContinuouslyPing)
     # GRPCThread.start()
-    constantPing.start()
-    # APIThread.start()
+    #constantPing.start()
+    APIThread.start()

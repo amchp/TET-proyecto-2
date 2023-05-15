@@ -1,12 +1,22 @@
-//import axios from "axios";
+import axios from "axios";
 import { Client } from "../models/Client";
 
-//const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 
 export async function getClients(): Promise<(Client)[]> {
     try {
-        //const response = await axios.get(BACKEND_URL + '/api/developer/organization/');
+        {
+            "32.144.202.3": {
+                load: 0.1,
+                instance_id: "
+            }
+        }
+        const response = await axios.get(SERVER_URL + '/servers/');
+        response.data.map((json: any) => {
+            console.log(json);
+        });
+
         //const users: Developer[] = response.data.map((json: any) => {
         //    return JsonToUser(json);
         //});

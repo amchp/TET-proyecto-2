@@ -1,8 +1,10 @@
 from flask import Flask, abort
+from flask_cors import CORS
 from GRPC.services.ConnectionService import ConnectionService
 from config import SERVER_ADDRESS, API_PORT
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/servers/")
 def servers():

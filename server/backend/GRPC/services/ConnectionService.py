@@ -3,7 +3,7 @@ from threading import Lock
 
 
 class ConnectionService(Connection_pb2_grpc.ConnectionServiceServicer):
-    addresses = {}
+    addresses = {'0.0.0.0:8080': 0, '0.0.0.0:8081': 0}
     lock = Lock()
 
     def __init__(self) -> None:
