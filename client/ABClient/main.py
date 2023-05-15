@@ -1,3 +1,4 @@
+from time import sleep
 from GRPC.GRPCServer import serveGRPC
 from GRPC.GRPCClient import connect
 from threading import Thread
@@ -11,10 +12,12 @@ def runGRPCServer():
     serveGRPC()
 
 if __name__ == '__main__':
-    runConnection()
     GRPCThread = Thread(target=runGRPCServer)
-    APIThread = Thread(target=runAPI)
     GRPCThread.start()
+    sleep(3)
+    runConnection()
+    APIThread = Thread(target=runAPI)
+    
     APIThread.start()
     
     

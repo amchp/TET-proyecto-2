@@ -36,6 +36,7 @@ def ping(address):
         return sendPingToAddress(address)
     except:
         serverSwitch(address)
+        return 0
     
 
         
