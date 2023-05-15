@@ -2,7 +2,7 @@ from flask import Flask, abort
 from threading import Thread
 from GRPC.services.ConnectionService import ConnectionService
 from AWS.AWS import AWS_SERVICE
-from config import SERVER_ADDRESS, API_PORT, 
+from config import SERVER_ADDRESS, API_PORT
 
 app = Flask(__name__)
 
