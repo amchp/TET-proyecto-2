@@ -2,10 +2,13 @@ from GRPC.GRPCServer import serveGRPC
 from threading import Thread
 from GRPC.GRPCClient import continuouslyPing
 from GRPC.API.api import runAPI
+from AWS.AWS import AWS_SERVICE
+from config import DESIRED
+
+
 
 def startEC2():
-    # Start desired EC2
-    pass
+    AWS_SERVICE.create_ec2_instance(DESIRED)
 
 def runGRPCServer():
     serveGRPC()
@@ -14,10 +17,10 @@ def runContinuouslyPing():
     continuouslyPing()
 
 if __name__ == '__main__':
-    # startEC2()
     APIThread = Thread(target=runAPI)
-    # GRPCThread = Thread(target=runGRPCServer)
-    constantPing = Thread(target=runContinuouslyPing)
-    # GRPCThread.start()
-    #constantPing.start()
     APIThread.start()
+    GRPCThread = Thread(target=runGRPCServer)
+    constantPing = Thread(target=runContinuouslyPing)
+    startEC2()
+    GRPCThread.start()
+    constantPing.start()
