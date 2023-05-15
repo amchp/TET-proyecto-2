@@ -21,13 +21,13 @@ def sendPingToAddress(address):
         return load
 
 def terminate_instance(address):
-    instance_id = AWS_SERVICE.get_instance_by_ip(address.partition(":"))
+    instance_id = ConnectionService.addresses[address]['instance_id']
+    ConnectionService.deleteAddresses(address)
     AWS_SERVICE.terminate_instance(instance_id)
 
 def serverSwitch(address):
     # Create new AWS EC2
     Thread(target=terminate_instance, args=[address]).start()
-    ConnectionService.deleteAddresses(address)
     AWS_SERVICE.create_ec2_instance()
     # print("Delete")
 
