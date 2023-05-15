@@ -11,9 +11,10 @@ def runGRPCServer():
     serveGRPC()
 
 if __name__ == '__main__':
-    # runConnection()
+    runConnection()
+    GRPCThread = Thread(target=runGRPCServer)
     APIThread = Thread(target=runAPI)
-    # GRPCThread = Thread(target=runGRPCServer)
+    GRPCThread.start()
     APIThread.start()
-    # GRPCThread.start()
+    
     
