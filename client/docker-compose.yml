@@ -7,21 +7,6 @@ services:
       - "8000:8000"
       - "8080:8080"
     environment:
-      - PUBLIC_IP="${PUBLIC_IP}"
-      - PRIVATE_IP="${PRIVATE_IP}"
-      - INSTANCE_ID="${PRIVATE_IP}"
-
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-
-    ports:
-      - '80:3000'
-
-    volumes:
-      - ./frontend:/app/frontend
-      - /app/frontend/node_modules
-    environment:
-      - PUBLIC_IP="${PUBLIC_IP}"
+      - PUBLIC_IP=${PUBLIC_IP}
+      - PRIVATE_IP=${PRIVATE_IP}
+      - INSTANCE_ID=${INSTANCE_ID}
