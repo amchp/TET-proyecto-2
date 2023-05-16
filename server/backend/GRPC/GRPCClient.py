@@ -42,7 +42,6 @@ def autoScaling(meanLoad):
     if ConnectionService.future_address > 0:
         return
     print("AutoScaling", flush=True)
-    print(address)
     if meanLoad >= 0.6 and len(ConnectionService.addresses) < MAXIMUM:
         Thread(target=AWS_SERVICE.create_ec2_instance).start()
         return
