@@ -1,6 +1,7 @@
 import boto3
 import botocore.exceptions
 from config import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCES_KEY, AWS_SESSION_TOKEN, REGION_NAME, LAUNCH_TEMPLATE_ID, AMI_ID
+from GRPC.services.ConnectionService import ConnectionService
 
 resource_ec2 = boto3.resource("ec2", region_name=REGION_NAME, aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCES_KEY, aws_session_token=AWS_SESSION_TOKEN)
 
@@ -8,6 +9,7 @@ class AWS_SERVICE:
 
     @staticmethod
     def create_ec2_instance(quantity:int=1):
+        ConnectionService.future_address += quantity
         instance = None
         try:
             instance_params = {

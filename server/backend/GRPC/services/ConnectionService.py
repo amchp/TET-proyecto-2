@@ -6,6 +6,7 @@ from config import GRPC_SERVER_PORT
 class ConnectionService(Connection_pb2_grpc.ConnectionServiceServicer):
     addresses = {}
     lock = Lock()
+    future_address = 0
 
     def __init__(self) -> None:
         super().__init__()
@@ -13,6 +14,7 @@ class ConnectionService(Connection_pb2_grpc.ConnectionServiceServicer):
     @staticmethod
     def addAddresses(address, instance_id):
         with ConnectionService.lock:
+            ConnectionService.future_address -= 1
             ConnectionService.addresses[address] = {
                 "load" : 0,
                 "instance_id": instance_id
