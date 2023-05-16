@@ -18,10 +18,8 @@ services:
       dockerfile: Dockerfile
 
     ports:
-      - '80:3000'
+      - '80:80'
 
     volumes:
       - ./frontend:/app/frontend
       - /app/frontend/node_modules
-    environment:
-      - PUBLIC_IP=${PUBLIC_IP}

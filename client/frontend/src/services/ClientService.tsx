@@ -1,10 +1,11 @@
 import axios from "axios";
 
-const SERVER_URL = process.env.PUBLIC_IP;
+axios.defaults.baseURL = window.location.href.substring(0, window.location.href.length-1) + ":8000/";
 
 export async function setLoadToClient(load: number): Promise<void> {
     try {
-        await axios.post(SERVER_URL + ':8000/load/', {
+        console.log(axios.defaults.baseURL);
+        await axios.post("load/", {
             load: load
         });
     } catch (error: any) {
