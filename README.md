@@ -66,3 +66,22 @@ message onConnectResponse {
     bool is_accepted = 1;
 }
 ```
+
+# 2.4. Componente Frontend
+
+Como añadido al proyecto, se realizaron dos aplicaciones usanto React y Typescript. Una aplicación para el cliente y otra para el servidor. 
+
+## 2.4.1. Servidor
+
+Esta aplicación permite un uso ameno del sistema. Permite ver las instancias de clientes que se encuentran corriendo, junto con su dirección IP, su identificador y la carga que tiene cada instancia. El aplicativo permite también la creación de instancias y la eliminación de estas, además de que permite el monitoreo de los clientes y sus cargas en tiempo real.
+
+![Imagen de WhatsApp 2023-05-16 a las 11 04 46](https://github.com/amchp/TET-proyecto-2/assets/69641274/1d3a30c3-8586-4ad8-838f-7086354ffe5c)
+
+## 2.4.1. Cliente
+
+Esta aplicación permite facilitar la simulación de la carga de cada cliente para que el servidor pueda decidir cuando crear o eliminar una instancia. La interfaz sencilla, se tiene solamente un input que se trata de una barra de carga que va del 0% al 100%. Cuando se selecciona un valor, este se envía al cliente y este lo almacena. Cuando el servidor use el servicio Heartbeat, dicho cliente devolverá ese porcentaje de carga que fue establecido desde la aplicación Frontend.
+
+![Imagen de WhatsApp 2023-05-16 a las 11 04 45](https://github.com/amchp/TET-proyecto-2/assets/69641274/4291f256-3496-47ea-8303-9c8c31ba579c)
+
+
+
