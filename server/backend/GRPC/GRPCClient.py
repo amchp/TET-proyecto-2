@@ -47,7 +47,6 @@ def autoScaling(meanLoad):
         return
     if meanLoad < 0.6 and len(ConnectionService.addresses) > DESIRED:
         address = list(ConnectionService.addresses.keys())[-1]
-        print(address)
         Thread(target=terminate_instance, args=[address]).start()
         return
 
