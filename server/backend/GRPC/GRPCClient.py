@@ -49,6 +49,9 @@ def autoScaling(meanLoad):
         address = list(ConnectionService.addresses.keys())[-1]
         Thread(target=terminate_instance, args=[address]).start()
         return
+    if len(ConnectionService.addresses) < DESIRED:
+        Thread(target=AWS_SERVICE.create_ec2_instance, args=[DESIRED - len(ConnectionService.addresses)]).start()
+        return
 
 def sendPingToAllAddress():
     addresses = ConnectionService.addresses.copy()
