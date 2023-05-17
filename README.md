@@ -83,5 +83,30 @@ Esta aplicación permite facilitar la simulación de la carga de cada cliente pa
 
 ![Imagen de WhatsApp 2023-05-16 a las 11 04 45](https://github.com/amchp/TET-proyecto-2/assets/69641274/4291f256-3496-47ea-8303-9c8c31ba579c)
 
+# 3. Creación de la template cliente
 
+Se accede al servicio EC2 de AWS y se crea una Launch Template con la imagen default Ubuntu 22.04.
 
+IMAGEN
+
+En la seccion de Advanced Details se edita el User data con los contenidos del script ABclient.bash
+
+IMAGEN
+
+# 4. Configurar el servidor
+
+Se crea una instancia EC2 de AWS con Ubuntu y se accede a la instancia via SSH.
+Dentro de la instancia se clona el repositorio con `git clone https://github.com/amchp/TET-proyecto-2.git`.
+
+Se accede al directorio principal del repositorio y se instala Docker `sudo sh dockersetup.sh`
+
+Se configura el archivo config.py del directorio backend parametrizando las cantidades minimas, deseada y maxima de las instancias a instanciar, y se editan los parametros de AWS acorde a las credenciales creadas, la id de la template cliente y la id de la AMI Ubuntu 22.04.
+
+IMAGEN
+
+Igualmente se configura el archivo .env de la carpeta frontend con el dominio deseado.
+
+Se accede al directorio server `cd server` y se pone a corrrer el servidor con Docker.
+`sudo docker compose build` y `sudo docker compose up`
+
+Se generaran los clientes 
