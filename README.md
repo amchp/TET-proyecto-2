@@ -87,11 +87,12 @@ Esta aplicación permite facilitar la simulación de la carga de cada cliente pa
 
 Se accede al servicio EC2 de AWS y se crea una Launch Template con la imagen default Ubuntu 22.04.
 
-IMAGEN
+![Captura de pantalla 2023-05-17 082827](https://github.com/amchp/TET-proyecto-2/assets/52335307/b0cb316f-bdf8-4ea2-853f-d19277c2d19e)
+
 
 En la seccion de Advanced Details se edita el User data con los contenidos del script ABclient.bash
 
-IMAGEN
+![Captura de pantalla 2023-05-17 082942](https://github.com/amchp/TET-proyecto-2/assets/52335307/b94b8c6e-3b01-43f4-85a3-43d0d0d4f581)
 
 # 4. Configurar el servidor
 
@@ -102,11 +103,11 @@ Se accede al directorio principal del repositorio y se instala Docker `sudo sh d
 
 Se configura el archivo config.py del directorio backend parametrizando las cantidades minimas, deseada y maxima de las instancias a instanciar, y se editan los parametros de AWS acorde a las credenciales creadas, la id de la template cliente y la id de la AMI Ubuntu 22.04.
 
-IMAGEN
+![Captura de pantalla 2023-05-17 085240](https://github.com/amchp/TET-proyecto-2/assets/52335307/345f4c05-5c2a-40d9-8724-4801872b1696)
 
 Igualmente se configura el archivo .env de la carpeta frontend con el dominio deseado.
 
 Se accede al directorio server `cd server` y se pone a corrrer el servidor con Docker.
 `sudo docker compose build` y `sudo docker compose up`
 
-Se generaran los clientes 
+Se generaran los clientes en la cuenta de AWS especificada en las credenciales del config.py del backend. Esto puede tomar un tiempo.
